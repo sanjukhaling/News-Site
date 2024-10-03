@@ -1,0 +1,54 @@
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - ./static:/app/static
+      - ./media:/app/media 
+
+
+    ports:
+      - "8001:8000"
+    image: web:app
+    container_name: mirmire--djangocontainer
+    command: >
+      sh -c "python manage.py collectstatic --noinput && 
+      python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+    environment:
+      SECRET_KEY: 'jXkUomuqJsyAtWn2auvFq2KmhvEBtb8nVCX-_3hAPLDXR6efW-wIgppITrAT8G03ZxI'
+      DATABASE_NAME: "sanju2"
+      DATABASE_USER: "sanju"
+      DATABASE_PASSWORD: "postgres"
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432  # Keep this consistent with your DB service
+    networks:
+      - default
+
+  db:
+    image: postgres:latest
+    container_name: db_container1
+    environment:
+      POSTGRES_DB: sanju2
+      POSTGRES_USER: sanju
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./pg:/var/lib/postgresql/data  # Persistent volume for database
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sanju"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:  # Volume for database persistence
+  static_volume:  # Volume for static files
+
+networks:
+  default:
+    driver: bridge  # Explicitly defining bridge network

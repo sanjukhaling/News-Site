@@ -1,0 +1,83 @@
+{% extends 'clienttemplates/basehome/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Contact Start -->
+ <div class="container-fluid py-3">
+    <div class="container">
+        <div class="bg-light py-2 px-4 mb-3">
+            <h3 class="m-0">Contact Us For Any Queries</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="bg-light mb-3" style="padding: 30px;">
+                    <h6 class="font-weight-bold">Get in touch</h6>
+                    <p>{{ contacts.description }}</p>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fa fa-2x fa-map-marker-alt text-primary mr-3"></i>
+                        <div class="d-flex flex-column">
+                            <h6 class="font-weight-bold">Our Office</h6>
+                            <p class="m-0">{{ contacts.address }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fa fa-2x fa-envelope-open text-primary mr-3"></i>
+                        <div class="d-flex flex-column">
+                            <h6 class="font-weight-bold">Email Us</h6>
+                            <p class="m-0">{{ contacts.email }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-2x fa-phone-alt text-primary mr-3"></i>
+                        <div class="d-flex flex-column">
+                            <h6 class="font-weight-bold">Call Us</h6>
+                            <p class="m-0">{{ contacts.phone }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-2x fa-map-marker text-info mr-3"></i>
+                        <div class="d-flex flex-column">
+                            <h6 class="font-weight-bold">Maps Me</h6>
+                            <p class="m-0"><a href="">{{ contacts.maps }}</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="contact-form bg-light mb-3" style="padding: 30px;">
+                    <div id="success"></div>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="control-group">
+                                    <p class="help-block text-danger">Name:</p>
+                                    {{ form.name }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="control-group">
+                                    <p class="help-block text-danger">Email:</p>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <p class="help-block text-danger">Subject:</p>
+                            {{ form.subject }}
+                        </div>
+                        <div class="control-group">
+                            <p class="help-block text-danger">Message:</p>
+                            {{ form.message }}
+                        </div>
+                        <div>
+                            <button class="btn btn-primary font-weight-semi-bold px-4" style="height: 50px;" type="submit">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+{% endblock %}

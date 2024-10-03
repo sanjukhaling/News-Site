@@ -1,0 +1,34 @@
+{% extends 'admintemplates/basehome/base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Delete User</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Are you sure you want to delete the user "{{ obj.first_name }} {{ obj.last_name }}"?</h5>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <a href="{% url 'backendapp:user_list' %}" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+</div>
+{% endblock %}

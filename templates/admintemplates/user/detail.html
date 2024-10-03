@@ -1,0 +1,41 @@
+{% extends 'admintemplates/basehome/base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">User Detail</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>User Information</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>First Name:</strong> {{ user.first_name }}</li>
+                            <li class="list-group-item"><strong>Last Name:</strong> {{ user.last_name }}</li>
+                            <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+                            <li class="list-group-item"><strong>Phone:</strong> {{ user.phone }}</li>
+                            <li class="list-group-item"><strong>Date of Birth:</strong> {{ user.dob }}</li>
+                            <li class="list-group-item"><strong>Gender:</strong> {{ user.gender }}</li>
+                            <li class="list-group-item"><strong>Address:</strong> {{ user.address }}</li>
+                            {% if request.user.has_perm('backendapp.view_user_password') %}
+                            <li class="list-group-item"><strong>Password:</strong> {{ user.password }}</li>
+                            {% endif %}
+                        </ul>
+                        <a href="{% url 'amsapp:user_list' %}" class="btn btn-secondary mt-3">Back to User List</a>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+</div>
+{% endblock %}

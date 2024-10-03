@@ -1,0 +1,96 @@
+{% extends "admintemplates/basehome/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Staff List:</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <h4><a href="{% url 'backendapp:staff_create' %}" class="btn btn-info">Add Staff</a></h4>
+                    <table class="table project-list-table table-nowrap table-centered table-borderless">
+                        <thead>
+                            <tr class="bg-secondary">
+                                <th scope="col" style="width: 100px">SN:</th>
+                                <th scope="col">Name:</th>
+                                <th scope="col">Post:</th>
+                                <th scope="col">Profile:</th>
+                                <th scope="col">Education:</th>
+                                <th scope="col">Phone:</th>
+                                <th scope="col">DoB:</th>
+                                <th scope="col">ACTION:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for n in staff_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><h5 class="text-truncate font-size-14"><a href="{% url 'backendapp:staff_detail' n.id %}" class="btn-group-sm">{{ n.name }}</a></h5></td>
+                                <td><h5 class="text-truncate font-size-14">{{ n.post }}</h5></td>
+                                <td>
+                                    {% if n.profile %}
+                                        <img src="{{ n.profile.url }}" class="img-fluid" alt="Image" height="70" width="60">
+                                    {% else %}
+                                        <span>No image available</span>
+                                    {% endif %}
+                                </td>
+                                <td><h5 class="text-truncate font-size-14">{{ n.education }}</h5></td>
+                                <td><h5 class="text-truncate font-size-14">{{ n.phone }}</h5></td>
+                                <td><h5 class="text-truncate font-size-14">{{ n.DoB }}</h5></td>
+                                <td>
+                                    <a href="{% url 'backendapp:staff_update' n.id %}" class="btn btn-info btn-sm">Edit</a>
+                                    <a href="{% url 'backendapp:staff_delete' n.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <!-- First and Previous Page Links -->
+                            {% if staff_list.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1">First</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ staff_list.previous_page_number }}">Previous</a>
+                                </li>
+                            {% endif %}
+
+                            <!-- Page Numbers -->
+                            {% for n in totalpagelist %}
+                                <li class="page-item {% if staff_list.number == n %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+                                </li>
+                            {% endfor %}
+
+                            <!-- Next and Last Page Links -->
+                            {% if staff_list.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ staff_list.next_page_number }}">Next</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ lastpage }}">Last</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div> <!-- container-fluid -->
+</div>
+{% endblock %}

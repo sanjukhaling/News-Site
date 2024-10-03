@@ -1,0 +1,22 @@
+{% extends "admintemplates/basehome/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <form method="post">
+                    {% csrf_token %}
+                    <h4>Are you sure you want to delete {{ staff_delete.name }}?</h4>
+                    <br>
+                    <button type="submit" class="btn btn-info">Yes</button>
+                    <a href="{% url 'backendapp:staff_lists' %}" class="btn btn-success">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

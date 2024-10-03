@@ -1,0 +1,95 @@
+{% extends "admintemplates/basehome/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Ads List:</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <h4><a href="{% url 'adsapp:ads_create' %}" class="btn btn-info">Add Ads</a></h4>
+                    <table class="table project-list-table table-nowrap table-centered table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 100px">SN:</th>
+                                <th scope="col">Title:</th>
+                                <th scope="col">Issue Date:</th>
+                                <th scope="col">End Date:</th>
+                                <th scope="col">Image:</th>
+                                <th scope="col">Sponsorships:</th>
+                                <th scope="col">Remaining Days:</th>
+                                <th scope="col">Ads Category:</th>
+                                <th scope="col">ACTION:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for n in ads_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    <h5 class="text-truncate font-size-14">
+                                        <a href="{% url 'adsapp:ads_detail' n.id %}" class="btn-group-sm">{{ n.title }}</a>
+                                    </h5>
+                                </td>
+                                <td><h5 class="text-truncate font-size-14">{{ n.issue_date }}</h5></td>
+                                <td><h5 class="text-truncate font-size-14">{{ n.end_date }}</h5></td>
+                                <td><img src="{{ n.image.url }}" class="img-fluid" alt="Image" height="100" width="100"></td>
+                                <td><h5 class="text-truncate font-size-14">{{ n.sponsorships }}</h5></td>
+                                <td><h5 class="text-truncate font-size-14">{{ n.remaining_days }}</h5></td>
+                                <td><h5 class="text-truncate font-size-14">{{ n.ads_category.title }}</h5></td>
+                                <td>
+                                    <a href="{% url 'adsapp:ads_update' n.id %}" class="btn btn-info btn-sm">Edit</a>
+                                    <a href="{% url 'adsapp:ads_delete' n.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="9" class="text-center">No ads found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if ads_list.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1">First</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ ads_list.previous_page_number }}">Previous</a>
+                                </li>
+                            {% endif %}
+
+                            <li class="page-item disabled">
+                                <span class="page-link">Page {{ ads_list.number }} of {{ ads_list.paginator.num_pages }}</span>
+                            </li>
+
+                            {% if ads_list.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ ads_list.next_page_number }}">Next</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ ads_list.paginator.num_pages }}">Last</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div> <!-- container-fluid -->
+</div>
+{% endblock %}
